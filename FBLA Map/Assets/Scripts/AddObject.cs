@@ -6,8 +6,8 @@ public class AddObject : MonoBehaviour {
 
     public void SpawnObject(string objectName)
     {
-        //GameObject gameObj = (GameObject)Instantiate(Resources.Load(objectName));
-        GameObject gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        GameObject gameObj = (GameObject)Instantiate(Resources.Load(objectName));
+        //GameObject gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
         gameObj.transform.parent = spawnBase.transform;
         gameObj.transform.localPosition = new Vector3(10.0f, 10.0f, 0.0f);
