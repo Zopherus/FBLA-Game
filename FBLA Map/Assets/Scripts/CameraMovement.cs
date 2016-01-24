@@ -23,7 +23,7 @@ public class CameraMovement : MonoBehaviour {
     public Texture2D SelectedHighlight = null;
 
     private Vector3 _startClick = -Vector3.one;
-    private float _selectionStartTime = -1.0f;
+    private bool deselectRect = false;
 
 	// Use this for initialization
 	void Start () {
@@ -73,20 +73,10 @@ public class CameraMovement : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             _startClick = Input.mousePosition;
-            _selectionStartTime = Time.time;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (Selection.width < 0)
-            {
-                Selection.x += Selection.width;
-                Selection.width = -Selection.width;
-            }
-            if (Selection.height < 0)
-            {
-                Selection.y += Selection.height;
-                Selection.height = -Selection.height;
-            }
+            deselectRect = true;
         }
 
         if (Input.GetMouseButton(0))
@@ -95,12 +85,12 @@ public class CameraMovement : MonoBehaviour {
 
     private void OnGUI()
     {
-        float sinceSelection = Mathf.Abs(Time.time - _selectionStartTime);
-        if (sinceSelection > SEL_TIME)
+        if (deselectRect)
         {
             // Deselect the rectangle.
             _startClick = -Vector3.one;
             Selection = new Rect(0.0f, 0.0f, 0.0f, 0.0f);
+            deselectRect = false;
         }
 
         if (_startClick != -Vector3.one)

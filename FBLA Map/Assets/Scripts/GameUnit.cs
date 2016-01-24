@@ -14,9 +14,11 @@ public class GameUnit : MonoBehaviour {
     public bool Selected = false;
     public float CurrentUnitHealth = 100.0f;
 
+    private NavMeshAgent agent;
+
     void Start()
     {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         agent.speed = UnitSpeed;
     }
 
@@ -25,6 +27,16 @@ public class GameUnit : MonoBehaviour {
     {
 	    if (Input.GetMouseButtonUp(0))
         {
+            if (CameraMovement.Selection.width < 0)
+            {
+                CameraMovement.Selection.x += CameraMovement.Selection.width;
+                CameraMovement.Selection.width = -CameraMovement.Selection.width;
+            }
+            if (CameraMovement.Selection.height < 0)
+            {
+                CameraMovement.Selection.y += CameraMovement.Selection.height;
+                CameraMovement.Selection.height = -CameraMovement.Selection.height;
+            }
             Vector3 camPos = Camera.main.WorldToScreenPoint(transform.position);
             camPos.y = CameraMovement.InvertMouseY(camPos.y);
             Selected = CameraMovement.Selection.Contains(camPos);
@@ -58,7 +70,6 @@ public class GameUnit : MonoBehaviour {
 
     public void MoveTo(Vector3 positionToMoveTo)
     {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.destination = positionToMoveTo;
     }
 
