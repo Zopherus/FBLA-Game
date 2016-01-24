@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class GameUnit : MonoBehaviour {
-    public bool selected = false;
+    public bool Selected = false;
 
 	// Update is called once per frame
 	void Update ()
@@ -11,12 +11,17 @@ public class GameUnit : MonoBehaviour {
         {
             Vector3 camPos = Camera.main.WorldToScreenPoint(transform.position);
             camPos.y = CameraMovement.InvertMouseY(camPos.y);
-            selected = CameraMovement.Selection.Contains(camPos);
+            Selected = CameraMovement.Selection.Contains(camPos);
         }
-        if (selected)
+        if (Selected)
             SetSelectedColor(Color.red);
         else
             SetSelectedColor(Color.white);
+    }
+
+    public void MoveTo(Vector3 positionToMoveTo)
+    {
+        transform.position = positionToMoveTo;
     }
 
     void SetSelectedColor(Color color)
