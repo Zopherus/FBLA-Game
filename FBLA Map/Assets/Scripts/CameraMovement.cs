@@ -37,6 +37,15 @@ public class CameraMovement : MonoBehaviour {
         CheckCameraSelection();
     }
 
+    private void CheckMoveClick()
+    {
+        if (Input.GetMouseButtonUp(1))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+    }
+
     private void CheckCameraSelection()
     {
         if (Input.GetMouseButtonDown(0))
