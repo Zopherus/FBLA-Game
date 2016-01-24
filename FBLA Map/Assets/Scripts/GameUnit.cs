@@ -2,7 +2,15 @@
 using System.Collections;
 
 public class GameUnit : MonoBehaviour {
+    private const float UNIT_SPEED = 10.0f;
+
     public bool Selected = false;
+
+    void Start()
+    {
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.speed = UNIT_SPEED;
+    }
 
 	// Update is called once per frame
 	void Update ()
@@ -21,7 +29,8 @@ public class GameUnit : MonoBehaviour {
 
     public void MoveTo(Vector3 positionToMoveTo)
     {
-        transform.position = positionToMoveTo;
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.destination = positionToMoveTo;
     }
 
     void SetSelectedColor(Color color)
