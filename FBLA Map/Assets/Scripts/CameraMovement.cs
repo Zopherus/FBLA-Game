@@ -15,12 +15,15 @@ public class CameraMovement : MonoBehaviour {
     private const float MAX_FOV = 90.0f;
     // The camera sensitivity.
     private const float CAMERA_SENS = 10.0f;
+    private const float SEL_TIME = 2.0f;
 
     ///////////////////////////////
 
-    public Texture2D _selectionHighlight = null;
-    public static Rect _selection = new Rect(0.0f, 0.0f, 0.0f, 0.0f);
+    public static Rect Selection = new Rect(0.0f, 0.0f, 0.0f, 0.0f);
+    public Texture2D SelectedHighlight = null;
+
     private Vector3 _startClick = -Vector3.one;
+    private float _selectionStartTime = -1.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +34,7 @@ public class CameraMovement : MonoBehaviour {
 	void Update ()
     {
         MoveCamera();
+        CheckCameraSelection();
     }
 
     private void CheckCameraSelection()
@@ -38,23 +42,41 @@ public class CameraMovement : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             _startClick = Input.mousePosition;
+            _selectionStartTime = Time.time;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (_selection.width < 0)
+            if (Selection.width < 0)
             {
-                _selection.x += _selection.width;
-                _selection.width = -_selection.width;
+                Selection.x += Selection.width;
+                Selection.width = -Selection.width;
             }
-            if (_selection.height < 0)
+            if (Selection.height < 0)
             {
-                _selection.y += _selection.height;
-                _selection.height = -_selection.height;
+                Selection.y += Selection.height;
+                Selection.height = -Selection.height;
             }
         }
 
         if (Input.GetMouseButton(0))
-            _selection = new Rect(_startClick.x, InvertMouseY(_startClick.y), Input.mousePosition.x - _startClick.x, InvertMouseY(Input.mousePosition.y) - InvertMouseY(_startClick.y));
+            Selection = new Rect(_startClick.x, InvertMouseY(_startClick.y), Input.mousePosition.x - _startClick.x, InvertMouseY(Input.mousePosition.y) - InvertMouseY(_startClick.y));
+    }
+
+    private void OnGUI()
+    {
+        float sinceSelection = Mathf.Abs(Time.time - _selectionStartTime);
+        if (sinceSelection > SEL_TIME)
+        {
+            // Deselect the rectangle.
+            _startClick = -Vector3.one;
+            Selection = new Rect(0.0f, 0.0f, 0.0f, 0.0f);
+        }
+
+        if (_startClick != -Vector3.one)
+        {
+            GUI.color = new Color(1, 1, 1, 0.5f);
+            GUI.DrawTexture(Selection, SelectedHighlight);
+        }
     }
 
     public static float InvertMouseY(float y)
