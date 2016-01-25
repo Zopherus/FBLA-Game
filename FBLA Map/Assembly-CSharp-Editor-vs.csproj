@@ -47,9 +47,15 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
+     <Compile Include="Assets\NoiseBrush\Scripts\Editor\Layout.cs" />
+     <Compile Include="Assets\NoiseBrush\Scripts\Editor\NoiseBrushEditor.cs" />
+     <Compile Include="Assets\Scripts\Editor\AlphaNumericSort.cs" />
+     <Compile Include="Assets\Scripts\Editor\GUIHierarchy.cs" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
+     <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+     <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
      <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
