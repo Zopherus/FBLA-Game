@@ -12,6 +12,8 @@ public class GameUnit : MonoBehaviour {
     public Texture2D HealthBarTexture = null;
 
     public bool Selected = false;
+    // A team of zero is the player.
+    public int Team = 0;
     public float CurrentUnitHealth = 100.0f;
 
     private NavMeshAgent agent;

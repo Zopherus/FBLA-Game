@@ -21,6 +21,8 @@ public class CameraMovement : MonoBehaviour {
 
     public static Rect Selection = new Rect(0.0f, 0.0f, 0.0f, 0.0f);
     public Texture2D SelectedHighlight = null;
+    public Texture2D DefaultCursor = null;
+    public Texture2D AttackCursor = null;
 
     private Vector3 _startClick = -Vector3.one;
     private bool deselectRect = false;
@@ -37,6 +39,30 @@ public class CameraMovement : MonoBehaviour {
         CheckCameraSelection();
 
         CheckMoveClick();
+    }
+
+    private void UpdateCursor()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
+        Texture2D setTexture = DefaultCursor;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameUnit hitGameUnit = hit.collider.gameObject.GetComponent<GameUnit>();
+            if (hitGameUnit != null && hitGameUnit.Team != 0)
+                setTexture = AttackCursor;
+        }
+
+        float cursorSizeX = setTexture.width;
+        float cursorSizeY = setTexture.height;
+
+        GUI.DrawTexture(new Rect(Event.current.mousePosition.x - (cursorSizeX / 2), Event.current.mousePosition.y - (cursorSizeY / 2), cursorSizeX, cursorSizeY), setTexture);
+        //TODO:
+        // Uncomment this line in production.
+        //Cursor.visible = false;
     }
 
     private void CheckMoveClick()
@@ -98,6 +124,8 @@ public class CameraMovement : MonoBehaviour {
             GUI.color = new Color(1, 1, 1, 0.5f);
             GUI.DrawTexture(Selection, SelectedHighlight);
         }
+
+        UpdateCursor();
     }
 
     public static float InvertMouseY(float y)
