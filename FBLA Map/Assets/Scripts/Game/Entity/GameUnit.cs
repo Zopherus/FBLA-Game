@@ -9,11 +9,13 @@ public class GameUnit : MonoBehaviour, GameEntity
     private const float HEALTH_BAR_WIDTH = 100.0f;
     private const float HEALTH_BAR_HEIGHT = 5.0f;
     private const float HEALTH_DAMAGE_DISP_TIME = 3.0f;
+    private const float DAMAGE_RATE_PER_SEC = 1.0f;
 
 
     private NavMeshAgent agent;
     private FBLA.Game.AI.StateMachine<GameEntity> _stateMachine;
     private float _timeSinceDamageTaken = -1.0f;
+    private float _timeSinceLastAttack = -1.0f;
 
     // Variables to be set in the editor.
     public float UnitSpeed = 10.0f;
@@ -40,11 +42,18 @@ public class GameUnit : MonoBehaviour, GameEntity
         UpdateIsSelected();
         _stateMachine.Update();
 
-        if (_timeSinceDamageTaken > 0.0f)
+        if (_timeSinceDamageTaken >= 0.0f)
         {
             _timeSinceDamageTaken += Time.deltaTime;
             if (_timeSinceDamageTaken > HEALTH_DAMAGE_DISP_TIME)
                 _timeSinceDamageTaken = -1.0f;
+        }
+
+        if (_timeSinceLastAttack >= 0.0f)
+        {
+            _timeSinceLastAttack += Time.deltaTime;
+            if (_timeSinceLastAttack > DAMAGE_RATE_PER_SEC)
+                _timeSinceLastAttack = -1.0f;
         }
     }
     
@@ -166,9 +175,13 @@ public class GameUnit : MonoBehaviour, GameEntity
 
     public void DamageEnemy(GameEntity gameEntity)
     {
-        Debug.Log("Attacking enemy");
+        if (_timeSinceLastAttack != -1.0f)
+            return;
+        
         // Spawn the particle system to show the unit is being show at.
         GameObject shotPS = (GameObject)Instantiate(Resources.Load("ShotPrefab"));
+        Vector3 offset = new Vector3(0.0f, 3.0f, 0.0f);
+        shotPS.transform.position = this.GetPos() + offset;
         // Orient the particle system such that it is pointing towards the object being shot at.
 
         Vector3 heading = gameEntity.GetPos() - this.GetPos();
@@ -176,6 +189,7 @@ public class GameUnit : MonoBehaviour, GameEntity
         shotPS.transform.rotation = Quaternion.LookRotation(heading, Vector3.up);
 
         gameEntity.TakeDamage(this.GetDamage());
+        _timeSinceLastAttack = 0.0f;
     }
 
     public void TakeDamage(float damage)

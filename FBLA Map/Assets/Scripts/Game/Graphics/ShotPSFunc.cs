@@ -14,6 +14,7 @@ public class ShotPSFunc : MonoBehaviour {
 	void Update () {
 	    if (_ps && !_ps.IsAlive())
         {
+            Debug.Log("Destorying particle system.");
             Destroy(gameObject);
         }
 	}

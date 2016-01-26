@@ -9,8 +9,7 @@ public class InteractionMgr
         GameUnit clickedGameUnit = clickedGameObj.GetComponent<GameUnit>();
         if (clickedGameUnit != null)
         {
-            // TODO:
-            // Implement unit interactions.
+            UnitClicked(clickedGameUnit);
         }
         if (clickedGameObj.name == "Terrain")
             OnTerrainInteraction(clickedGameObj, clickedLoc);
@@ -20,6 +19,7 @@ public class InteractionMgr
     {
         if (clickedGameUnit.Team != 0)
         {
+            Debug.Log("Clicked on enemy");
             SetStateForAllSelected(new ChaseState(clickedGameUnit));
         }
         else
