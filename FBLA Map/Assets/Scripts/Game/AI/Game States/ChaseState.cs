@@ -20,6 +20,7 @@ namespace FBLA.Game.AI
         public override void EnterState(GameEntity unit)
         {
             base.EnterState(unit);
+            Debug.Log("Chasing enemy");
         }
 
         public override void UpdateState(GameEntity unit)
@@ -47,6 +48,7 @@ namespace FBLA.Game.AI
             base.ExitState(unit);
 
             unit.StopMovement();
+            Debug.Log("Stopping chasing enemy");
         }
     }
 }

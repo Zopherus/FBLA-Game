@@ -15,6 +15,7 @@ namespace FBLA.Game.AI
         public void EnterState(GameEntity unit)
         {
             unit.StopMovement();
+            Debug.Log("Entering attack state");
         }
 
         public void UpdateState(GameEntity unit)
@@ -29,7 +30,10 @@ namespace FBLA.Game.AI
             if (distance > attackRange)
             {
                 unit.GetStateMachine().ChangeState(new ChaseState(unit));
+                return;
             }
+
+            unit.DamageEnemy(_unitToAttack);
         }
 
 

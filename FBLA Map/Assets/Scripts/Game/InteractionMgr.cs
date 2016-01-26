@@ -39,7 +39,7 @@ public class InteractionMgr
         IEnumerable<GameUnit> selectedUnits = GetSelectedUnits();
         foreach (GameUnit selectedUnit in selectedUnits)
         {
-            selectedUnit.StateMachine.ChangeState(setState);
+            selectedUnit.GetStateMachine().ChangeState(setState);
         }
     }
 
