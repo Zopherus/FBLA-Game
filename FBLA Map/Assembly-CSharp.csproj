@@ -79,8 +79,11 @@
      <Compile Include="Assets\Scripts\Game\AI\StateManager.cs" />
      <Compile Include="Assets\Scripts\Game\AddObject.cs" />
      <Compile Include="Assets\Scripts\Game\CameraBehavior.cs" />
+     <Compile Include="Assets\Scripts\Game\Entity\GameBuilding.cs" />
      <Compile Include="Assets\Scripts\Game\Entity\GameEntity.cs" />
+     <Compile Include="Assets\Scripts\Game\Entity\GamePlayer.cs" />
      <Compile Include="Assets\Scripts\Game\Entity\GameUnit.cs" />
+     <Compile Include="Assets\Scripts\Game\Entity\SelectablePlayer.cs" />
      <Compile Include="Assets\Scripts\Game\Graphics\ShotPSFunc.cs" />
      <Compile Include="Assets\Scripts\Game\InteractionMgr.cs" />
      <Compile Include="Assets\Scripts\Unity\ActiveStateToggler.cs" />
