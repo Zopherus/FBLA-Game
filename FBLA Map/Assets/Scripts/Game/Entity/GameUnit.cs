@@ -1,32 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using FBLA.Game.AI;
 
 public class GameUnit : MonoBehaviour, GameEntity
 {
 
     private const float HEALTH_BAR_WIDTH = 100.0f;
     private const float HEALTH_BAR_HEIGHT = 5.0f;
+    private const float HEALTH_DAMAGE_DISP_TIME = 3.0f;
 
 
     private NavMeshAgent agent;
     private FBLA.Game.AI.StateMachine<GameEntity> _stateMachine;
+    private float _timeSinceDamageTaken = -1.0f;
 
     // Variables to be set in the editor.
     public float UnitSpeed = 10.0f;
     public float MaxUnitHealth = 100.0f;
+    public float AttackRange = 15.0f;
+    public float Damage = 5.0f;
     public Texture2D HealthBarTexture = null;
 
     public bool Selected = false;
     // A team of zero is the player.
     public int Team = 0;
     public float CurrentUnitHealth = 100.0f;
-
-    public FBLA.Game.AI.StateMachine<GameEntity> StateMachine
-    {
-        get { return _stateMachine; }
-    }
-
 
     void Start()
     {
@@ -40,6 +39,13 @@ public class GameUnit : MonoBehaviour, GameEntity
     {
         UpdateIsSelected();
         _stateMachine.Update();
+
+        if (_timeSinceDamageTaken > 0.0f)
+        {
+            _timeSinceDamageTaken += Time.deltaTime;
+            if (_timeSinceDamageTaken > HEALTH_DAMAGE_DISP_TIME)
+                _timeSinceDamageTaken = -1.0f;
+        }
     }
     
     public void UpdateIsSelected()
@@ -68,7 +74,7 @@ public class GameUnit : MonoBehaviour, GameEntity
 
     void OnGUI()
     {
-        if (Event.current.type == EventType.Repaint && Selected)
+        if (Event.current.type == EventType.Repaint && ShouldDrawHealthBar())
         {
             Vector3 shiftedPos = transform.position;
             shiftedPos.y += 10.0f;
@@ -78,6 +84,11 @@ public class GameUnit : MonoBehaviour, GameEntity
             float percentageFull = CurrentUnitHealth / MaxUnitHealth;
             GUI.DrawTexture(new Rect(screenSpacePoint.x - (HEALTH_BAR_WIDTH / 2.0f), screenSpacePoint.y, HEALTH_BAR_WIDTH * percentageFull, HEALTH_BAR_HEIGHT), HealthBarTexture);
         }
+    }
+
+    public bool ShouldDrawHealthBar()
+    {
+        return Selected || (_timeSinceDamageTaken > 0.0f);
     }
 
     public static Vector3 WorldToScreenPoint(Vector3 position)
@@ -125,5 +136,56 @@ public class GameUnit : MonoBehaviour, GameEntity
     public void SetTeam(int team)
     {
         Team = team;
+    }
+
+    public float GetAttackRange()
+    {
+        return AttackRange;
+    }
+
+    public void SetAttackRange(float attackRange)
+    {
+        AttackRange = attackRange;
+    }
+
+    public void StopMovement()
+    {
+        if (agent.destination != transform.position)
+            agent.destination = transform.position;
+    }
+
+    public StateMachine<GameEntity> GetStateMachine()
+    {
+        return _stateMachine;
+    }
+
+    public float GetHealth()
+    {
+        return CurrentUnitHealth;
+    }
+
+    public void DamageEnemy(GameEntity gameEntity)
+    {
+        Debug.Log("Attacking enemy");
+        // Spawn the particle system to show the unit is being show at.
+        GameObject shotPS = (GameObject)Instantiate(Resources.Load("ShotPrefab"));
+        // Orient the particle system such that it is pointing towards the object being shot at.
+
+        Vector3 heading = gameEntity.GetPos() - this.GetPos();
+
+        shotPS.transform.rotation = Quaternion.LookRotation(heading, Vector3.up);
+
+        gameEntity.TakeDamage(this.GetDamage());
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _timeSinceDamageTaken = 0.0f;
+        CurrentUnitHealth -= damage;
+    }
+
+    public float GetDamage()
+    {
+        return Damage;
     }
 }
