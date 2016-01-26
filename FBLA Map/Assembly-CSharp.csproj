@@ -70,9 +70,15 @@
      <Compile Include="Assets\Game Assets\Utility\TimedObjectDestructor.cs" />
      <Compile Include="Assets\Game Assets\Utility\WaypointCircuit.cs" />
      <Compile Include="Assets\Game Assets\Utility\WaypointProgressTracker.cs" />
+     <Compile Include="Assets\Scripts\Game\AI\AttackState.cs" />
+     <Compile Include="Assets\Scripts\Game\AI\MoveState.cs" />
+     <Compile Include="Assets\Scripts\Game\AI\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\Game\AI\StateManager.cs" />
+     <Compile Include="Assets\Scripts\Game\AI\UnitState.cs" />
      <Compile Include="Assets\Scripts\Game\AddObject.cs" />
      <Compile Include="Assets\Scripts\Game\CameraBehavior.cs" />
-     <Compile Include="Assets\Scripts\Game\GameUnit.cs" />
+     <Compile Include="Assets\Scripts\Game\Entity\GameEntity.cs" />
+     <Compile Include="Assets\Scripts\Game\Entity\GameUnit.cs" />
      <Compile Include="Assets\Scripts\Unity\ActiveStateToggler.cs" />
      <Compile Include="Assets\Scripts\Unity\ApplicationManager.cs" />
      <Compile Include="Assets\Scripts\Unity\ChangeColor.cs" />

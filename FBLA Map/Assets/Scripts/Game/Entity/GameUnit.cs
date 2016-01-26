@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class GameUnit : MonoBehaviour {
+public class GameUnit : MonoBehaviour, GameEntity
+{
 
     private const float HEALTH_BAR_WIDTH = 100.0f;
     private const float HEALTH_BAR_HEIGHT = 5.0f;
@@ -17,17 +19,25 @@ public class GameUnit : MonoBehaviour {
     public float CurrentUnitHealth = 100.0f;
 
     private NavMeshAgent agent;
+    private FBLA.Game.AI.StateMachine<GameEntity> _stateMachine;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = UnitSpeed;
+        _stateMachine = new FBLA.Game.AI.StateMachine<GameEntity>(this);
     }
 
 	// Update is called once per frame
 	void Update ()
     {
-	    if (Input.GetMouseButtonUp(0))
+        UpdateIsSelected();
+        _stateMachine.Update();
+    }
+    
+    public void UpdateIsSelected()
+    {
+        if (Input.GetMouseButtonUp(0))
         {
             if (CameraBehavior.Selection.width < 0)
             {
@@ -63,16 +73,11 @@ public class GameUnit : MonoBehaviour {
         }
     }
 
-    public Vector3 WorldToScreenPoint(Vector3 position)
+    public static Vector3 WorldToScreenPoint(Vector3 position)
     {
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(position);
         screenPosition.y = Screen.height - screenPosition.y;
         return screenPosition;
-    }
-
-    public void MoveTo(Vector3 positionToMoveTo)
-    {
-        agent.destination = positionToMoveTo;
     }
 
     void SetSelectedColor(Color color)
@@ -81,5 +86,37 @@ public class GameUnit : MonoBehaviour {
         Renderer[] childrenRenderers = GetComponentsInChildren<Renderer>() as Renderer[];
         foreach (Renderer childrenRenderer in childrenRenderers)
             childrenRenderer.material.color = color;
+    }
+
+
+    public Vector3 GetPos()
+    {
+        return transform.position;
+    }
+
+    public void MoveTo(Vector3 positionToMoveTo)
+    {
+        if (agent.destination != positionToMoveTo)
+            agent.destination = positionToMoveTo;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        UnitSpeed = speed;
+    }
+
+    public float GetSpeed()
+    {
+        return UnitSpeed;
+    }
+
+    public int GetTeam()
+    {
+        return Team;
+    }
+
+    public void SetTeam(int team)
+    {
+        Team = team;
     }
 }
