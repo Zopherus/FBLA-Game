@@ -22,7 +22,6 @@ namespace FBLA.Game.AI
         public void EnterState(GameEntity unit)
         {
             unit.StopMovement();
-            Debug.Log("Entering attack state");
         }
 
         public void UpdateState(GameEntity unit)
@@ -38,7 +37,8 @@ namespace FBLA.Game.AI
             // Is the unit within attacking distance of the unit to attack?
             float distance = Vector3.Distance(unitToAttackPos, unit.GetPos());
 
-            float attackRange = unit.GetAttackRange();
+            float extra = _unitToAttack is GameBuilding ? GameBuilding.EXTRA_ATTACK_DIST : 0.0f;
+            float attackRange = unit.GetAttackRange() + extra;
 
             if (distance > attackRange)
             {

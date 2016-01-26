@@ -6,7 +6,7 @@ public class InteractionMgr
 {
     public static void OnGameObjInteractionClicked(GameObject clickedGameObj, Vector3 clickedLoc)
     {
-        GameUnit clickedGameUnit = clickedGameObj.GetComponent<GameUnit>();
+        GameEntity clickedGameUnit = clickedGameObj.GetComponent<GameEntity>();
         if (clickedGameUnit != null)
         {
             UnitClicked(clickedGameUnit);
@@ -15,9 +15,9 @@ public class InteractionMgr
             OnTerrainInteraction(clickedGameObj, clickedLoc);
     }
 
-    private static void UnitClicked(GameUnit clickedGameUnit)
+    private static void UnitClicked(GameEntity clickedGameUnit)
     {
-        if (clickedGameUnit.Team != 0)
+        if (clickedGameUnit.GetTeam() != 0)
         {
             Debug.Log("Clicked on enemy");
             SetStateForAllSelected(new ChaseState(clickedGameUnit));

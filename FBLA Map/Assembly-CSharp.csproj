@@ -70,6 +70,7 @@
      <Compile Include="Assets\Game Assets\Utility\TimedObjectDestructor.cs" />
      <Compile Include="Assets\Game Assets\Utility\WaypointCircuit.cs" />
      <Compile Include="Assets\Game Assets\Utility\WaypointProgressTracker.cs" />
+     <Compile Include="Assets\Scripts\Game\AI\AIPlayer.cs" />
      <Compile Include="Assets\Scripts\Game\AI\Game States\AttackState.cs" />
      <Compile Include="Assets\Scripts\Game\AI\Game States\ChaseState.cs" />
      <Compile Include="Assets\Scripts\Game\AI\Game States\DyingState.cs" />
@@ -86,8 +87,16 @@
      <Compile Include="Assets\Scripts\Game\Entity\GamePlayer.cs" />
      <Compile Include="Assets\Scripts\Game\Entity\GameUnit.cs" />
      <Compile Include="Assets\Scripts\Game\Entity\SelectablePlayer.cs" />
+     <Compile Include="Assets\Scripts\Game\GameLogic\CoinAccumulator.cs" />
+     <Compile Include="Assets\Scripts\Game\GameLogic\GameLogicMgr.cs" />
      <Compile Include="Assets\Scripts\Game\Graphics\ShotPSFunc.cs" />
      <Compile Include="Assets\Scripts\Game\InteractionMgr.cs" />
+     <Compile Include="Assets\Scripts\Game\UI\CoinCountUpdater.cs" />
+     <Compile Include="Assets\Scripts\Game\UI\GameOverMenu.cs" />
+     <Compile Include="Assets\Scripts\Game\UI\GameOverMessagerSetter.cs" />
+     <Compile Include="Assets\Scripts\Game\UI\InGameMenu.cs" />
+     <Compile Include="Assets\Scripts\Game\UI\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\Game\UI\ScoreUpdater.cs" />
      <Compile Include="Assets\Scripts\Unity\ActiveStateToggler.cs" />
      <Compile Include="Assets\Scripts\Unity\ApplicationManager.cs" />
      <Compile Include="Assets\Scripts\Unity\ChangeColor.cs" />

@@ -38,7 +38,8 @@ namespace FBLA.Game.AI
             // As the unit must move towards a dynamic position.
             unit.MoveTo(unitToAttackPos);
 
-            float attackRange = unit.GetAttackRange();
+            float extra = _unitToAttack is GameBuilding ? GameBuilding.EXTRA_ATTACK_DIST : 0.0f;
+            float attackRange = unit.GetAttackRange() + extra;
 
             // Is the unit within attacking distance of the unit to attack?
             float distance = Vector3.Distance(unitToAttackPos, unit.GetPos());

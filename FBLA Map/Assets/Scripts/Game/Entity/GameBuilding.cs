@@ -3,6 +3,9 @@ using System.Collections;
 using System;
 
 public class GameBuilding : GamePlayer {
+
+    public const float EXTRA_ATTACK_DIST = 20.0f;
+
     public override void MoveTo(Vector3 position)
     {
         // Buildings can't move!

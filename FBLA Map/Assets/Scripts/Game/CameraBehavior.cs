@@ -9,7 +9,7 @@ public class CameraBehavior : MonoBehaviour
     ////////////////////
 
     // Camera movement variables.
-    private const float SPEED = 10.0f;
+    private const float SPEED = 20.0f;
     // The minimum field of view.
     private const float MIN_FOV = 15.0f;
     // The maximum field of view.
@@ -53,9 +53,11 @@ public class CameraBehavior : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            GameUnit hitGameUnit = hit.collider.gameObject.GetComponent<GameUnit>();
-            if (hitGameUnit != null && hitGameUnit.Team != 0)
+            GameEntity hitGameUnit = hit.collider.gameObject.GetComponent<GameEntity>();
+            if (hitGameUnit != null && hitGameUnit.GetTeam() != 0)
+            {
                 setTexture = AttackCursor;
+            }
         }
 
         float cursorSizeX = setTexture.width;

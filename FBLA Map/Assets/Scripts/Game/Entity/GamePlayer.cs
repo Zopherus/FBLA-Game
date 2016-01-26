@@ -8,6 +8,7 @@ public abstract class GamePlayer : MonoBehaviour, GameEntity
     private const float HEALTH_BAR_WIDTH = 100.0f;
     private const float HEALTH_BAR_HEIGHT = 5.0f;
     private const float HEALTH_DAMAGE_DISP_TIME = 3.0f;
+    private const float ENEMY_TINT = 0.2f;
 
     private float _timeSinceDamageTaken = -1.0f;
     private float _timeSinceLastAttack = -1.0f;
@@ -26,6 +27,14 @@ public abstract class GamePlayer : MonoBehaviour, GameEntity
     public virtual void Start ()
     {
         _stateMachine = new FBLA.Game.AI.StateMachine<GameEntity>(this);
+
+        if (GetTeam() != 0)
+        {
+            // Give the object a slight tint.
+            Color setColor = Color.green;
+            setColor.a = ENEMY_TINT;
+            SetSelectedColor(setColor);
+        }
     }
 
     // Update is called once per frame

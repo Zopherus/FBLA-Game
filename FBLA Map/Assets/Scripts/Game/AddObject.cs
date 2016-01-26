@@ -2,21 +2,28 @@
 using System.Collections;
 
 public class AddObject : MonoBehaviour {
-    public GameObject spawnBase;
+    public GameObject[] SpawnBases;
 
-    public void SpawnObject(string objectName)
+    public GameObject SpawnObject(string objectName, int baseNum)
     {
         GameObject gameObj = (GameObject)Instantiate(Resources.Load(objectName));
 
-        gameObj.transform.position = new Vector3(100.0f, 0.0f, 100.0f);
-        while (isInOtherUnit(gameObj, gameObj.GetComponent<Collider>().bounds))
+        Vector3 spawnOffset = new Vector3(0.0f, 0.0f, 30.0f);
+        gameObj.transform.position = SpawnBases[baseNum].transform.position + spawnOffset;
+        while (IsInOtherUnit(gameObj, gameObj.GetComponent<Collider>().bounds))
         {
             gameObj.transform.Translate(new Vector3(0.5f, 0.0f, 0.0f));
         }
 
+        return gameObj;
     }
 
-    public bool isInOtherUnit(GameObject obj, Bounds bounds)
+    public void SpawnObject(string objectName)
+    {
+        SpawnObject(objectName, 0);
+    }
+
+    private bool IsInOtherUnit(GameObject obj, Bounds bounds)
     {
         foreach (GameObject unit in GameObject.FindGameObjectsWithTag("GameUnit"))
         {
