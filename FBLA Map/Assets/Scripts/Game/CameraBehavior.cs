@@ -132,11 +132,12 @@ public class CameraBehavior : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.Translate(new Vector3(0, -SPEED * Time.deltaTime, 0));
+            transform.Translate(new Vector3(0, -SPEED * Time.deltaTime * Mathf.Tan(0.95993108859f), -SPEED* Time.deltaTime * (1/ Mathf.Tan(0.95993108859f))));
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(new Vector3(0, SPEED * Time.deltaTime, 0));
+            //55 degrees in radians
+            transform.Translate(new Vector3(0, SPEED * Time.deltaTime * Mathf.Tan(0.95993108859f), SPEED * Time.deltaTime * (1/Mathf.Tan(0.95993108859f))));
         }
 
         float fov = Camera.main.fieldOfView;
