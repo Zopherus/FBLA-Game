@@ -75,11 +75,43 @@ public class GameUnit : MonoBehaviour, GameEntity
             camPos.y = CameraBehavior.InvertMouseY(camPos.y);
             Selected = CameraBehavior.Selection.Contains(camPos);
         }
+        CheckUnitClick();
         if (Selected)
             SetSelectedColor(Color.red);
         else
             SetSelectedColor(Color.white);
     }
+
+
+    private void CheckUnitClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject.tag == "GameUnit")
+                {
+                    if (collider.bounds.Contains(hit.point))
+                    {
+                        DeselectAllUnits();
+                        Selected = true;
+                    }
+                }
+            }
+        }
+    }
+
+    public void DeselectAllUnits()
+    {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("GameUnit"))
+        {
+            GameUnit gameUnit = obj.GetComponent<GameUnit>();
+            gameUnit.Selected = false;
+        }
+    }
+
 
     void OnGUI()
     {
