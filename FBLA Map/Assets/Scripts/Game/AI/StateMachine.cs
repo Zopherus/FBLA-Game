@@ -27,10 +27,12 @@ namespace FBLA.Game.AI
         {
             _prevState = _currentState;
 
-            _currentState.ExitState(_owner);
+            if (_currentState != null)
+                _currentState.ExitState(_owner);
 
             _currentState = changeState;
-            _currentState.EnterState(_owner);
+            if (_currentState != null)
+                _currentState.EnterState(_owner);
         }
 
         public void RevertToPrev()
@@ -40,6 +42,8 @@ namespace FBLA.Game.AI
 
         public bool IsInState(Type stateType)
         {
+            if (_currentState == null)
+                return false;
             return _currentState.GetType() == stateType;
         }
     }
