@@ -7,8 +7,9 @@ public class GameUnit : SelectablePlayer
     private NavMeshAgent agent;
 
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         agent = GetComponent<NavMeshAgent>();
         agent.speed = GetSpeed();
     }
