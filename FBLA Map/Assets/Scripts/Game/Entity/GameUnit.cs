@@ -8,6 +8,10 @@ public class GameUnit : MonoBehaviour, GameEntity
     private const float HEALTH_BAR_WIDTH = 100.0f;
     private const float HEALTH_BAR_HEIGHT = 5.0f;
 
+
+    private NavMeshAgent agent;
+    private FBLA.Game.AI.StateMachine<GameEntity> _stateMachine;
+
     // Variables to be set in the editor.
     public float UnitSpeed = 10.0f;
     public float MaxUnitHealth = 100.0f;
@@ -18,8 +22,11 @@ public class GameUnit : MonoBehaviour, GameEntity
     public int Team = 0;
     public float CurrentUnitHealth = 100.0f;
 
-    private NavMeshAgent agent;
-    private FBLA.Game.AI.StateMachine<GameEntity> _stateMachine;
+    public FBLA.Game.AI.StateMachine<GameEntity> StateMachine
+    {
+        get { return _stateMachine; }
+    }
+
 
     void Start()
     {

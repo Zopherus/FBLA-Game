@@ -69,29 +69,14 @@ public class CameraBehavior : MonoBehaviour
 
     private void CheckMoveClick()
     {
+        // Right click.
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.gameObject.name == "Terrain")
-                {
-                    Vector3 newPos = hit.point;
-
-                    GameObject[] gameObjs = GameObject.FindGameObjectsWithTag("GameUnit");
-                    foreach (GameObject gameObj in gameObjs)
-                    {
-                        GameUnit gameUnit = gameObj.GetComponent<GameUnit>();
-                        if (gameUnit == null)
-                            continue;
-
-                        if (gameUnit.Selected)
-                        {
-                            gameUnit.MoveTo(newPos);
-                        }
-                    }
-                }
+                InteractionMgr.OnGameObjInteractionClicked(hit.collider.gameObject, hit.point);
             }
         }
     }
