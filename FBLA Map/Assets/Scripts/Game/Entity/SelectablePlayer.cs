@@ -7,8 +7,9 @@ public abstract class SelectablePlayer : GamePlayer
     public bool Selected = false;
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
         UpdateIsSelected();
     }
 

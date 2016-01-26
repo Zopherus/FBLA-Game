@@ -23,15 +23,14 @@ public abstract class GamePlayer : MonoBehaviour, GameEntity
     public Texture2D HealthBarTexture = null;
 
     // Use this for initialization
-    void Start ()
+    public virtual void Start ()
     {
         _stateMachine = new FBLA.Game.AI.StateMachine<GameEntity>(this);
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
-
         _stateMachine.Update();
 
         // Update all of the counters.
