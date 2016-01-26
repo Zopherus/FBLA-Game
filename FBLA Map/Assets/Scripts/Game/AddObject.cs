@@ -8,7 +8,7 @@ public class AddObject : MonoBehaviour {
     {
         GameObject gameObj = (GameObject)Instantiate(Resources.Load(objectName));
 
-        gameObj.transform.parent = spawnBase.transform;
+        gameObj.transform.position = new Vector3(100.0f, 0.0f, 100.0f);
         while (isInOtherUnit(gameObj, gameObj.GetComponent<Collider>().bounds))
         {
             gameObj.transform.Translate(new Vector3(0.5f, 0.0f, 0.0f));

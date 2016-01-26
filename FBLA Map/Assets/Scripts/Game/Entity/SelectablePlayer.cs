@@ -17,7 +17,7 @@ public abstract class SelectablePlayer : GamePlayer
 
     public void UpdateIsSelected()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && CameraBehavior.Selection.width * CameraBehavior.Selection.height > 2)
         {
             if (CameraBehavior.Selection.width < 0)
             {

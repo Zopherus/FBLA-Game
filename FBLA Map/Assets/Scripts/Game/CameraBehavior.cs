@@ -61,7 +61,7 @@ public class CameraBehavior : MonoBehaviour
         float cursorSizeX = setTexture.width;
         float cursorSizeY = setTexture.height;
 
-        GUI.DrawTexture(new Rect(Event.current.mousePosition.x - (cursorSizeX / 2), Event.current.mousePosition.y - (cursorSizeY / 2), cursorSizeX, cursorSizeY), setTexture);
+        GUI.DrawTexture(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, cursorSizeX, cursorSizeY), setTexture);
         //TODO:
         // Uncomment this line in production.
         //Cursor.visible = false;
