@@ -146,6 +146,8 @@ public abstract class GamePlayer : MonoBehaviour, GameEntity
     public virtual void DamageEnemy(GameEntity gameEntity)
     {
         gameEntity.TakeDamage(this.GetDamage());
+        Vector3 towards = gameEntity.GetPos() - this.GetPos();
+        SetDir(towards);
         _timeSinceLastAttack = 0.0f;
     }
 
@@ -167,6 +169,11 @@ public abstract class GamePlayer : MonoBehaviour, GameEntity
     public bool WasRecentlyAttacked()
     {
         return _timeSinceDamageTaken > 0.0f;
+    }
+
+    public void SetDir(Vector3 lookAt)
+    {
+        transform.rotation = Quaternion.LookRotation(lookAt, Vector3.up);
     }
 
     public abstract void StopMovement();

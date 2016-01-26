@@ -5,6 +5,8 @@ namespace FBLA.Game.AI
 {
     public class MoveState : UnitState<GameEntity>
     {
+        private const float ARRIVE_TOLERANCE = 0.5f;
+
         private Vector3 _dest;
 
         public MoveState(Vector3 dest)
@@ -20,6 +22,10 @@ namespace FBLA.Game.AI
 
         public virtual void UpdateState(GameEntity unit)
         {
+            if (Vector3.Distance(unit.GetPos(), _dest) < ARRIVE_TOLERANCE)
+            {
+                unit.GetStateMachine().ChangeState(new RestState());
+            }
         }
 
         public virtual void ExitState(GameEntity unit)

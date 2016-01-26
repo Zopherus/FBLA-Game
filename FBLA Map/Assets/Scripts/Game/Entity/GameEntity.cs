@@ -27,4 +27,7 @@ public interface GameEntity
     float GetDamage();
 
     void MoveTo(Vector3 position);
+    void SetDir(Vector3 lookAt);
+
+    bool IsDead();
 }

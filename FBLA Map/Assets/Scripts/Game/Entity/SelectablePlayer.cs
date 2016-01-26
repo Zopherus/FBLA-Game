@@ -67,7 +67,8 @@ public abstract class SelectablePlayer : GamePlayer
         {
             // Alll units that are selectable must go here?
             GameUnit gameUnit = obj.GetComponent<GameUnit>();
-            gameUnit.Selected = false;
+            if (gameUnit != null)
+                gameUnit.Selected = false;
         }
     }
 }

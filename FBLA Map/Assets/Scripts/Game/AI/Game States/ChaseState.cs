@@ -27,6 +27,12 @@ namespace FBLA.Game.AI
         {
             base.UpdateState(unit);
 
+            if (_unitToAttack == null || _unitToAttack.IsDead())
+            {
+                unit.GetStateMachine().ChangeState(new RestState());
+                return;
+            }
+
             Vector3 unitToAttackPos = _unitToAttack.GetPos();
 
             // As the unit must move towards a dynamic position.

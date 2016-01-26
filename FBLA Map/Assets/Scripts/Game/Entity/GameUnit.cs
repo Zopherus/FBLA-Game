@@ -12,6 +12,9 @@ public class GameUnit : SelectablePlayer
         base.Start();
         agent = GetComponent<NavMeshAgent>();
         agent.speed = GetSpeed();
+
+        // Set the default state.
+        this.GetStateMachine().ChangeState(new FBLA.Game.AI.RestState());
     }
 
 
