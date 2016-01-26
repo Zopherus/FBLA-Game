@@ -10,7 +10,9 @@ public abstract class SelectablePlayer : GamePlayer
     public override void Update()
     {
         base.Update();
-        UpdateIsSelected();
+
+        if (GetTeam() == 0)
+            UpdateIsSelected();
     }
 
     public void UpdateIsSelected()

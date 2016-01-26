@@ -31,6 +31,13 @@ public abstract class GamePlayer : MonoBehaviour, GameEntity
     // Update is called once per frame
     public virtual void Update()
     {
+        if (IsDead())
+        {
+            Destroy(gameObject);
+            this.GetStateMachine().ChangeState(new DyingState());
+            return;
+        }
+
         _stateMachine.Update();
 
         // Update all of the counters.
@@ -147,9 +154,14 @@ public abstract class GamePlayer : MonoBehaviour, GameEntity
         return Damage;
     }
 
+    public bool IsDead()
+    {
+        return CurrentUnitHealth <= 0.0f;
+    }
+
     public bool CanAttack()
     {
-        return _timeSinceDamageTaken == -1.0f;
+        return _timeSinceLastAttack == -1.0f;
     }
 
     public bool WasRecentlyAttacked()
